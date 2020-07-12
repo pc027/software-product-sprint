@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Phoebe's Miscellaneous Projects</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+
+<body>
+    <div id="content">
+        <h1>Phoebe's Projects</h1>
+        <a href="index.html">Portfolio Home</a>
+    
+
+        <!--Slideshow gallery of project images-->
+        <!--Followed example on w3schools: https://www.w3schools.com/howto/howto_js_slideshow_gallery.asp -->
+        <div class="imagegal">
+
+            <div class="slide">
+                <div class="slidetext">1/2</div>
+                    <a href="/images/projects/ATW.jpg"><img src="/images/projects/ATW.jpg" style="width:100%"/></a>
+            </div>
+
+             <div class="slide">
+                <div class="slidetext">2/2</div>
+                    <a href="/images/projects/subtitling.png"><img src="/images/projects/subtitling.png" style="width:100%"/></a>
+            </div>
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+            <!-- Image text -->
+            <div class="caption-container">
+                <p id="caption"></p>
+            </div>
+
+            <!-- Thumbnail images -->
+            <div class="sliderow">
+                <div class="slidecol">
+                    <img class="demo cursor" src="/images/projects/ATW.jpg" style="width:100%" onclick="currentSlide(1)" alt="Awaken the World Album Translations">
+                </div>
+                <div class="slidecol">
+                    <img class="demo cursor" src="/images/projects/subtitling.png" style="width:100%" onclick="currentSlide(2)" alt="Dream Plan Subtitling">
+                </div>
+            </div>
+
+        </div>
+        </div>
+</body>
+</html>
