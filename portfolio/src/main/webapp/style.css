@@ -8,6 +8,7 @@
   margin-top: 20px;
 }
 
+
 .images {
   display: flex;
   flex-wrap: wrap;
@@ -138,4 +139,16 @@
 .active,
 .demo:hover {
   opacity: 1;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    justify-content: center;
 }
