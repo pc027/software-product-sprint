@@ -68,3 +68,27 @@ function getDataServletArrow() {
         document.getElementById("data-container").innerText = data;
     });
 }
+
+/**
+* getCommentJSON fetches comment (as a JSON string) contained in DataServlet
+ */
+function getCommentJSON() {
+    fetch('/data').then(response => response.json()).then((data) => {
+        
+        const commentListElement = document.getElementById('comments-container');
+        commentListElement.innerHTML = '';
+        commentListElement.appendChild(
+            createListElement('Main course: ' + data.mainCourse));
+        commentListElement.appendChild(
+            createListElement('Side dish: ' + data.sideDish));
+        commentListElement.appendChild(
+            createListElement('Drinks: ' + data.drinks));
+    });
+}
+
+/** createComment makes an <li> element containing comments. */
+function createComment(comments) {
+  const comElement = document.createElement('li');
+  comElement.innerText = comments;
+  return comElement;
+}
