@@ -59,3 +59,12 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
   captionText.innerHTML = dots[slideIndex-1].alt;
 }
+
+/** 
+* getDataServletArrow fetches content from DataServlet and adds it to the page
+ */
+function getDataServletArrow() {
+    fetch('/data').then(response => response.text()).then((data) => {
+        document.getElementById("data-container").innerText = data;
+    });
+}
