@@ -74,15 +74,11 @@ function getDataServletArrow() {
  */
 function getCommentJSON() {
     fetch('/data').then(response => response.json()).then((data) => {
-        
+
         const commentListElement = document.getElementById('comments-container');
         commentListElement.innerHTML = '';
         commentListElement.appendChild(
-            createListElement('Main course: ' + data.mainCourse));
-        commentListElement.appendChild(
-            createListElement('Side dish: ' + data.sideDish));
-        commentListElement.appendChild(
-            createListElement('Drinks: ' + data.drinks));
+            createListElement('Comment: ' + data.Comment));
     });
 }
 

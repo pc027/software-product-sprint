@@ -27,35 +27,48 @@ import com.google.gson.Gson;
 public class DataServlet extends HttpServlet {
 
     ArrayList<String> comments = new ArrayList<String>();
-    
-    /** addtoComments adds strings to comments ArrayList */
-    public void addtoComments() {
-        comments.add("hotdogs");
-        comments.add("french fries");
-        comments.add("soda");
-    }
 
     /** convertJSON converts ArrayList into a JSON string manually*/
     private String convertJSON(ArrayList<String> commentslist) {
         String json = "{";
-        json += "\"mainCourse\": ";
-        json += "\"" + comments.get(0) + "\"";
-        json += ", ";
-        json += "\"sideDish\": ";
-        json += "\"" + comments.get(1) + "\"";
-        json += ", ";
-        json += "\"drinks\": ";
-        json += "\"" + comments.get(2) + "\"";
+        int index;
+        for (index = 0; index < comments.size(); index++) {
+            json += "\"Comment\" " + index + ": ";
+            json += "\"" + comments.get(index) + "\"";
+        }
         json += "}";
         return json;
     }
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    addtoComments();
-    String json = convertJSON(comments);
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
-  }
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Printing comments as a JSON string
+        String json = convertJSON(comments);
+        response.setContentType("application/json;");
+        response.getWriter().println(json);
+    }
+
+    @Override
+    /** doPost adds form input comments into comments ArrayList */
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Get the input from the form and add to comment ArrayList
+        String text = getParameter(request, "input-comment", "defaultval");
+        comments.add(text);
+
+        //redirect users to /data where comment JSON is printed
+        response.sendRedirect("/data");
+    }
+    /**
+    * getParameter
+    * @return the request parameter, or the default value if the parameter
+    *         was not specified by the client
+    */
+    public String getParameter(HttpServletRequest request, String input, String defaultValue) {
+        String value = request.getParameter(input);
+        if (value == null) {
+            return defaultValue;
+        }
+        return value;
+    }  
 
 }
