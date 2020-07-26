@@ -20,6 +20,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import java.io.PrintWriter;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +36,7 @@ import com.google.gson.Gson;
 public class DataServlet extends HttpServlet {
 
     ArrayList<String> commentList = new ArrayList<String>();
+    ArrayList<String> emailList = new ArrayList<String>();
 
     /** gsonconvertJSON converts ArrayList into a JSON string with GSON library*/
     private String gsonConvertJSON(ArrayList<String> listOfComments) {
@@ -54,11 +58,14 @@ public class DataServlet extends HttpServlet {
         for (Entity entity : commentOutput.asIterable()) {
             String commentContent = (String) entity.getProperty("content");
             commentList.add(commentContent);
+            String emailAddress = (String) entity.getProperty("email");
+            emailList.add(commentContent);
         }
 
         String jsonStr = gsonConvertJSON(commentList);
+        String emailStr = gsonConvertJSON(emailList);
         response.setContentType("application/json;");
-        response.getWriter().println(jsonStr);
+        response.getWriter().println(jsonStr + emailStr);
     }
 
     @Override
@@ -66,11 +73,15 @@ public class DataServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get the input from the form and add to comment ArrayList
         String text = getParameter(request, "comment-input", "");
-        commentList.add(text.toString());
+        //commentList.add(text.toString());
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity commentEntity = new Entity("Comment");
+        UserService userService = UserServiceFactory.getUserService();
+        String email = userService.getCurrentUser().getEmail();
+
         commentEntity.setProperty("content", text);
+        commentEntity.setProperty("email", email);
         datastore.put(commentEntity);
 
         // Redirect back to homepage
