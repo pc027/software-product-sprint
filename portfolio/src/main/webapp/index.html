@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="cformVisibility()">
     <div id="content">
       <h1>Phoebe's Portfolio</h1>
 
@@ -23,14 +23,18 @@
         <button onclick="getDataServletArrow()">Say Hello!</button>
         <div id="data-container"></div>
 
-        <div id="comments-container"></div>
+        <div id="comments-container">
+            <form action="/text" method="POST">
+                <p>Enter a comment:</p>
+                <textarea name="text-input">Insert comment here</textarea>
+                <br/><br/>
+                <input type="submit" />
+            </form>
+        </div>
 
-        <form action="/text" method="POST">
-            <p>Enter a comment:</p>
-            <textarea name="text-input">Insert comment here</textarea>
-            <br/><br/>
-            <input type="submit" />
-        </form>
+        <div id="login-container">
+            <p>Login <a href="/auth">here</a></p>
+        </div>
 
       <p>I am a rising junior studying Computer Science at Harvey Mudd College. 
           <br>In my free time, I like to translate Chinese shows to English, make subtitles for videos, and watch movies.</p>

@@ -14,6 +14,13 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+//import com.google.sps.data.allComments;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,22 +48,25 @@ public class DataServlet extends HttpServlet {
     }
 
     @Override
+    /** doGet gives the client form input comments from comments ArrayList */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
         // Printing comments as a JSON string
-        String json = convertJSON(comments);
-        response.setContentType("application/json;");
-        response.getWriter().println(json);
+        //String json = convertJSON(comments);
+        response.setContentType("text/html;");
+        response.getWriter().println(comments);
     }
 
     @Override
     /** doPost adds form input comments into comments ArrayList */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get the input from the form and add to comment ArrayList
-        String text = getParameter(request, "input-comment", "defaultval");
+        String text = request.getParameter("comments");
         comments.add(text);
 
         //redirect users to /data where comment JSON is printed
         response.sendRedirect("/data");
+
     }
     /**
     * getParameter

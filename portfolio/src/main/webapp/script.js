@@ -88,3 +88,29 @@ function createComment(comments) {
   comElement.innerText = comments;
   return comElement;
 }
+
+/** Toggle visibility of comment form depending on login status from AuthServlet.java */
+function cformVisibility() {
+    //Hide the form by default
+    var form = document.getElementById("comments-container");
+    var login = document.getElementById("login-container");
+    form.style.display = "none";
+    login.style.display = "none";
+
+    var status;
+
+    //Fetch and set status to loginstatus boolean from doGet in AuthServlet. True is logged in, false is logged out.
+    fetch('/auth').then(response => response.text()).then((loginstatus) => {
+        status = loginstatus.includes("true");
+
+        //User is logged in
+        if (status.toString() == "false") {
+            //Show login link
+            login.style.display = "block";
+        } else {
+            //Show comment form
+            form.style.display = "block";
+        };
+    });
+
+}
