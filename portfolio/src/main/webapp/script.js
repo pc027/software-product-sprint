@@ -61,8 +61,8 @@ function showSlides(n) {
 }
 
 /** 
-* getDataServletArrow fetches content from DataServlet and adds it to the page
- */
+* getDataServletArrow fetches comments from DataServlet as text and adds it to the page.
+*/
 function getDataServletArrow() {
     fetch('/data').then(response => response.text()).then((data) => {
         document.getElementById("data-container").innerText = data;
@@ -70,22 +70,23 @@ function getDataServletArrow() {
 }
 
 /**
-* getCommentJSON fetches comment (as a JSON string) contained in DataServlet
+* getCommentJSON fetches commentList in DataServlet (as a JSON string) and adds it to the page.
  */
 function getCommentJSON() {
+    //commentData is the output JSON string representation of commentlist
     fetch('/data').then(response => response.json()).then((data) => {
-
-        const commentListElement = document.getElementById('comments-container');
-        commentListElement.innerHTML = '';
-        commentListElement.appendChild(
-            createListElement('Comment: ' + data.Comment));
+        const commentListElement = document.getElementById('commentList-container');
+        //Append JSON data into container by converting them to strings
+        commentListElement.appendChild(createCommentElement('Comment: ' + data[0].toString()));
+        commentListElement.appendChild(createCommentElement('Comment: ' + data[1].toString()));
+        commentListElement.appendChild(createCommentElement('Comment: ' + data[2].toString()));
     });
 }
 
-/** createComment makes an <li> element containing comments. */
-function createComment(comments) {
+/** createCommentElement makes an <li> element containing comments. */
+function createCommentElement(commentText) {
   const comElement = document.createElement('li');
-  comElement.innerText = comments;
+  comElement.innerText = commentText;
   return comElement;
 }
 

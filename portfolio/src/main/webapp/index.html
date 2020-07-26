@@ -20,8 +20,11 @@
         </div>
         
         <!--Button to fetch info from DataServlet.java-->
-        <button onclick="getDataServletArrow()">Say Hello!</button>
+        <button onclick="getDataServletArrow()">Fetch comments as text!</button>
         <div id="data-container"></div>
+
+        <button onclick="getCommentJSON()">Fetch comments as JSON strings!</button>
+        <ul id="commentList-container"></ul>
 
         <div id="comments-container">
             <form action="/text" method="POST">

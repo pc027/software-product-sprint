@@ -33,28 +33,29 @@ import com.google.gson.Gson;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    ArrayList<String> comments = new ArrayList<String>();
+    ArrayList<String> commentList = new ArrayList<String>();
 
-    /** convertJSON converts ArrayList into a JSON string manually*/
-    private String convertJSON(ArrayList<String> commentslist) {
-        String json = "{";
-        int index;
-        for (index = 0; index < comments.size(); index++) {
-            json += "\"Comment\" " + index + ": ";
-            json += "\"" + comments.get(index) + "\"";
-        }
-        json += "}";
+    /** addtoComments add hardcoded messages into commentList*/
+    public void addtoComments() {
+        commentList.add("hotdogs");
+        commentList.add("french fries");
+        commentList.add("soda");
+    }
+
+    /** gsonconvertJSON converts ArrayList into a JSON string with GSON library*/
+    private String gsonConvertJSON(ArrayList<String> listOfComments) {
+        addtoComments();
+        Gson gsonObj = new Gson();
+        String json = gsonObj.toJson(listOfComments);
         return json;
     }
 
     @Override
     /** doGet gives the client form input comments from comments ArrayList */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
-        // Printing comments as a JSON string
-        //String json = convertJSON(comments);
-        response.setContentType("text/html;");
-        response.getWriter().println(comments);
+        String jsonStr = gsonConvertJSON(commentList);
+        response.setContentType("application/json;");
+        response.getWriter().println(jsonStr);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class DataServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get the input from the form and add to comment ArrayList
         String text = request.getParameter("comments");
-        comments.add(text);
+        commentList.add(text);
 
         //redirect users to /data where comment JSON is printed
         response.sendRedirect("/data");
