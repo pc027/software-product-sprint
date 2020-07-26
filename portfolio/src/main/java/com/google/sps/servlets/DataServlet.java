@@ -35,13 +35,6 @@ public class DataServlet extends HttpServlet {
 
     ArrayList<String> commentList = new ArrayList<String>();
 
-    /** addtoComments add hardcoded messages into commentList*/
-    public void addtoComments() {
-        commentList.add("hotdogs");
-        commentList.add("french fries");
-        commentList.add("soda");
-    }
-
     /** gsonconvertJSON converts ArrayList into a JSON string with GSON library*/
     private String gsonConvertJSON(ArrayList<String> listOfComments) {
         Gson gsonObj = new Gson();
@@ -63,6 +56,11 @@ public class DataServlet extends HttpServlet {
         // Get the input from the form and add to comment ArrayList
         String text = getParameter(request, "comment-input", "");
         commentList.add(text.toString());
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("content", text);
+        datastore.put(commentEntity);
 
         // Redirect back to homepage
         response.sendRedirect("/index.html");
