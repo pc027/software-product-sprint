@@ -76,11 +76,16 @@ function getCommentJSON() {
     //commentData is the output JSON string representation of commentlist
     fetch('/data').then(response => response.json()).then((data) => {
         const commentListElement = document.getElementById('commentList-container');
+        //commentListElement.innerText = data[0].toString();
         //Append JSON data into container by converting them to strings
         var index;
+        var emailIndex = data.length / 2;
         for (index = 0; index < data.length; index++) {
             var currComment = data[index];
+            var currEmail = data[emailIndex];
             commentListElement.appendChild(createCommentElement('Comment: ' + currComment.toString()));
+            commentListElement.appendChild(createCommentElement('Above comment by: ' + currEmail.toString()));
+            emailIndex++;
         }
     });
 }

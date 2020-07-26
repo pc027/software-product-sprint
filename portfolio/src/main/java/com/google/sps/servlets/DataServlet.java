@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import com.google.gson.Gson;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
@@ -59,13 +60,14 @@ public class DataServlet extends HttpServlet {
             String commentContent = (String) entity.getProperty("content");
             commentList.add(commentContent);
             String emailAddress = (String) entity.getProperty("email");
-            emailList.add(commentContent);
+            emailList.add(emailAddress);
         }
 
+        commentList.addAll(emailList);
         String jsonStr = gsonConvertJSON(commentList);
         String emailStr = gsonConvertJSON(emailList);
         response.setContentType("application/json;");
-        response.getWriter().println(jsonStr + emailStr);
+        response.getWriter().println(jsonStr);
     }
 
     @Override
