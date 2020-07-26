@@ -44,7 +44,6 @@ public class DataServlet extends HttpServlet {
 
     /** gsonconvertJSON converts ArrayList into a JSON string with GSON library*/
     private String gsonConvertJSON(ArrayList<String> listOfComments) {
-        addtoComments();
         Gson gsonObj = new Gson();
         String json = gsonObj.toJson(listOfComments);
         return json;
@@ -62,12 +61,12 @@ public class DataServlet extends HttpServlet {
     /** doPost adds form input comments into comments ArrayList */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get the input from the form and add to comment ArrayList
-        String text = request.getParameter("comments");
-        commentList.add(text);
+        String text = getParameter(request, "comment-input", "");
+        commentList.add(text.toString());
 
-        //redirect users to /data where comment JSON is printed
-        response.sendRedirect("/data");
-
+        // Redirect back to homepage
+        response.sendRedirect("/index.html");
+        return;
     }
     /**
     * getParameter
