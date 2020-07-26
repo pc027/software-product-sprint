@@ -77,9 +77,11 @@ function getCommentJSON() {
     fetch('/data').then(response => response.json()).then((data) => {
         const commentListElement = document.getElementById('commentList-container');
         //Append JSON data into container by converting them to strings
-        commentListElement.appendChild(createCommentElement('Comment: ' + data[0].toString()));
-        commentListElement.appendChild(createCommentElement('Comment: ' + data[1].toString()));
-        commentListElement.appendChild(createCommentElement('Comment: ' + data[2].toString()));
+        var index;
+        for (index = 0; index < data.length; index++) {
+            var currComment = data[index];
+            commentListElement.appendChild(createCommentElement('Comment: ' + currComment.toString()));
+        }
     });
 }
 

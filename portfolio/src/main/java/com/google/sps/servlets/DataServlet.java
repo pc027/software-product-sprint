@@ -20,7 +20,6 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-//import com.google.sps.data.allComments;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,6 +44,18 @@ public class DataServlet extends HttpServlet {
     @Override
     /** doGet gives the client form input comments from comments ArrayList */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Query commentQuery = new Query("Comment");
+
+        //Prepare a datastore Datastore and commentOutput PreparedQuery to store all entities in datastore
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery commentOutput = datastore.prepare(commentQuery);
+
+        //Iterate and retrieve all data from selected properties of selected entity
+        for (Entity entity : commentOutput.asIterable()) {
+            String commentContent = (String) entity.getProperty("content");
+            commentList.add(commentContent);
+        }
+
         String jsonStr = gsonConvertJSON(commentList);
         response.setContentType("application/json;");
         response.getWriter().println(jsonStr);
